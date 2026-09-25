@@ -7,6 +7,9 @@ export default function formularzDoFiltrowania({ typ }) {
 
     Movies.forEach((item) => {
       console.log(item.title);
+      for (let c in item.title) {
+        console.log(item.title[c]);
+      }
     });
   }
   return (
