@@ -1,14 +1,18 @@
 import Movies from "./movies.js";
 
 export default function formularzDoFiltrowania({ typ }) {
-  function filtrowanie() {
-    console.log(Movies);
-    console.log(typ);
+  function filtrowanie(e) {
+    // console.log(Movies);
+    // console.log(typ);
+    // console.log(e.target.value);
 
     Movies.forEach((item) => {
-      console.log(item.title);
+      //console.log(item.title);
       for (let c in item.title) {
-        console.log(item.title[c]);
+        //console.log(item.title[c]);
+        if (e.target.value[c] == item.title[c]) {
+          console.log(item.title);
+        }
       }
     });
   }
