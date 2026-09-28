@@ -1,24 +1,28 @@
 import Movies from "./movies.js";
 
-export default function formularzDoFiltrowania({ typ }) {
+export default function InputDoFiltrowania() {
+  const wybraneTytul = document.createElement("ul");
   function filtrowanie(e) {
-    // console.log(Movies);
-    // console.log(typ);
-    // console.log(e.target.value);
-
+    console.log(e.target);
     Movies.forEach((item) => {
-      //console.log(item.title);
       for (let c in item.title) {
-        //console.log(item.title[c]);
         if (e.target.value[c] == item.title[c]) {
           console.log(item.title);
+          let li = document.createElement("li");
+          wybraneTytul.append((li.innerHTML = item.title));
+          break;
         }
       }
     });
+    e.target.appendChild(wybraneTytul);
   }
   return (
     <>
-      <input onChange={filtrowanie} type="text" placeholder="szukaj..." />
+      <input
+        onChange={filtrowanie}
+        type="text"
+        placeholder="Podaj tytuł filmu ktory chcesz obejrzec.."
+      />
     </>
   );
 }

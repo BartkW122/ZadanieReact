@@ -1,9 +1,9 @@
 import FormDoZalogowania from "./componeents/FormDoZalogowania";
-import InputDoFiltrowania from "./componeents/inputDoFiltrowania";
+import FormDoFiltrowania from "./componeents/FormDoFiltrowania";
 function App() {
   return (
     <>
-      <InputDoFiltrowania typ={"title"} />
+      <FormDoFiltrowania />
     </>
   );
 }
