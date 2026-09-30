@@ -1,27 +1,55 @@
+import { useRef } from "react";
 import Movies from "./movies.js";
 
-export default function InputDoFiltrowania() {
-  const wybraneTytul = document.createElement("ul");
+export default function InputDoFiltrowania({ flitrowanie }) {
+  const wybraneTytul = useRef(document.createElement("ul"));
+
+  function wartosciInputa(e) {
+    const label = document.querySelector("#filtrTytulow");
+
+    wybraneTytul.current.innerHTML = "";
+    label.children[0].value = e.target.innerText;
+
+    flitrowanie({
+      target: {
+        id: "title",
+        value: e.target.innerText,
+      },
+    });
+  }
+
   function filtrowanie(e) {
-    console.log(e.target);
+    const label = document.querySelector("#filtrTytulow");
+
+    wybraneTytul.current.innerHTML = "";
+
+    const szukanyTytul = e.target.value.toLowerCase();
+
     Movies.forEach((item) => {
-      for (let c in item.title) {
-        if (e.target.value[c] == item.title[c]) {
-          console.log(item.title);
-          let li = document.createElement("li");
-          wybraneTytul.append((li.innerHTML = item.title));
-          break;
-        }
+      if (item.title.toLowerCase().includes(szukanyTytul)) {
+        const li = document.createElement("li");
+        const span = document.createElement("span");
+
+        span.innerText = item.title;
+        li.appendChild(span);
+        li.addEventListener("click", wartosciInputa);
+
+        wybraneTytul.current.appendChild(li);
       }
     });
-    e.target.appendChild(wybraneTytul);
+
+    if (!label.contains(wybraneTytul.current)) {
+      label.appendChild(wybraneTytul.current);
+    }
   }
+
   return (
     <>
       <input
+        id="title"
         onChange={filtrowanie}
         type="text"
-        placeholder="Podaj tytuł filmu ktory chcesz obejrzec.."
+        placeholder="Podaj tytuł filmu który chcesz obejrzeć..."
       />
     </>
   );

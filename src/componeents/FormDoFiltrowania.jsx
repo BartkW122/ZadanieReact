@@ -9,22 +9,28 @@ export default function FormDoFiltrowania() {
   });
 
   function flitrowanie(e) {
+    const noweFiltry = { ...filtryFilmu };
+
     switch (e.target.id) {
       case "genre":
-        filtryFilmu.gener = e.target.value;
+        noweFiltry.gener = e.target.value;
         break;
-      case "":
-        filtryFilmu.title = e.target.value;
+
+      case "title":
+        noweFiltry.title = e.target.value;
         break;
+
       case "odKiedy":
-        filtryFilmu.odKiedy = e.target.value;
+        noweFiltry.odKiedy = e.target.value;
         break;
+
       case "doKiedy":
-        filtryFilmu.doKiedy = e.target.value;
+        noweFiltry.doKiedy = e.target.value;
         break;
     }
 
-    console.log(filtryFilmu);
+    setfiltryFilmu(noweFiltry);
+    console.log(noweFiltry);
   }
   return (
     <form onChange={flitrowanie}>
@@ -37,7 +43,9 @@ export default function FormDoFiltrowania() {
         <option>Psychologiczny</option>
       </select>
 
-      <InputDoFiltrowania id="inputFiltr" />
+      <label id="filtrTytulow">
+        <InputDoFiltrowania flitrowanie={flitrowanie} />
+      </label>
 
       <label>
         od
