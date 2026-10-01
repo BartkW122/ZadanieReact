@@ -37,7 +37,9 @@ export default function FormDoFiltrowania() {
     e.preventDefault();
     let inputs = document.querySelectorAll("input");
     let ul = document.querySelector("ul");
-    ul.remove();
+    if (ul) {
+      ul.remove();
+    }
 
     inputs.forEach((input) => {
       input.value = "";
@@ -49,6 +51,7 @@ export default function FormDoFiltrowania() {
       odKiedy: "",
       doKiedy: "",
     });
+    console.log(filtryFilmu);
   }
   return (
     <form onChange={flitrowanie}>
