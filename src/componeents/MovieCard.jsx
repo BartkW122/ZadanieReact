@@ -7,15 +7,12 @@ export default function MovieCard({
   showtime,
 }) {
   return (
-    <div>
-      <header>{movieTitle}</header>
-      <main>
-        <img src={poster} />
-        <span>{genre}</span>
-        <span>{description}</span>
-        <span>{duration}</span>
-        <span>{showtime}</span>
-      </main>
+    <div className="movie-card">
+      <h2>{movieTitle}</h2>
+      <p>{genre}</p>
+      <p>{duration}</p>
+      <p>{description}</p>
+      <img src={poster} alt={movieTitle} />
     </div>
   );
 }
