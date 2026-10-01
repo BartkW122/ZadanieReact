@@ -1,16 +1,15 @@
-import { useState } from "react";
 import InputDoFiltrowania from "./InputDoFiltrowania";
-export default function FormDoFiltrowania() {
-  const [filtryFilmu, setfiltryFilmu] = useState({
-    gener: "",
-    title: "",
-    odKiedy: "",
-    doKiedy: "",
-  });
 
+export default function FormDoFiltrowania({
+  filtryFilmu,
+  setFiltryFilmu,
+  setPokazListe,
+}) {
   function flitrowanie(e) {
-    const noweFiltry = { ...filtryFilmu };
-    noweFiltry.gener = "Dramat";
+    const noweFiltry = {
+      ...filtryFilmu,
+    };
+
     switch (e.target.id) {
       case "genre":
         noweFiltry.gener = e.target.value;
@@ -27,58 +26,70 @@ export default function FormDoFiltrowania() {
       case "doKiedy":
         noweFiltry.doKiedy = e.target.value;
         break;
+
+      default:
+        break;
     }
 
-    setfiltryFilmu(noweFiltry);
-    console.log(noweFiltry);
+    setFiltryFilmu(noweFiltry);
+
+    setPokazListe(true);
   }
 
   function czyszczenieFiltrow(e) {
     e.preventDefault();
     let inputs = document.querySelectorAll("input");
-    let ul = document.querySelector("ul");
-    if (ul) {
-      ul.remove();
-    }
-
     inputs.forEach((input) => {
       input.value = "";
     });
-
-    setfiltryFilmu({
+    setFiltryFilmu({
       gener: "",
       title: "",
       odKiedy: "",
       doKiedy: "",
     });
-    console.log(filtryFilmu);
+
+    setPokazListe(false);
   }
+
   return (
     <form onChange={flitrowanie}>
-      <select id="genre">
-        <option>Dramat</option>
-        <option>Komedia</option>
-        <option>Sci-Fi</option>
-        <option>Thriller</option>
-        <option>Gangsterski</option>
-        <option>Psychologiczny</option>
+      <select id="genre" value={filtryFilmu.gener}>
+        <option value="">Wybierz gatunek</option>
+        <option value="Dramat">Dramat</option>
+        <option value="Komedia">Komedia</option>
+        <option value="Sci-Fi">Sci-Fi</option>
+        <option value="Thriller">Thriller</option>
+        <option value="Gangsterski">Gangsterski</option>
+        <option value="Psychologiczny">Psychologiczny</option>
       </select>
 
-      <label id="filtrTytulow">
+      <label>
         <InputDoFiltrowania flitrowanie={flitrowanie} />
       </label>
 
       <label>
         od
-        <input type="time" id="odKiedy" />
+        <input
+          type="time"
+          id="odKiedy"
+          value={filtryFilmu.odKiedy}
+          onChange={flitrowanie}
+        />
       </label>
 
       <label>
         do
-        <input type="time" id="doKiedy" />
+        <input
+          type="time"
+          id="doKiedy"
+          value={filtryFilmu.doKiedy}
+          onChange={flitrowanie}
+        />
       </label>
-      <button type="reset" onClick={czyszczenieFiltrow}>
-        czysc
+
+      <button type="button" onClick={czyszczenieFiltrow}>
+        czyść
       </button>
     </form>
   );
