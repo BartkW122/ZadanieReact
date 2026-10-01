@@ -6,7 +6,7 @@ function App() {
     <>
       <ListaFilmow
         filtry={{
-          gener: "wefe",
+          gener: "",
           title: "",
           odKiedy: "",
           doKiedy: "",
