@@ -10,7 +10,7 @@ export default function FormDoFiltrowania() {
 
   function flitrowanie(e) {
     const noweFiltry = { ...filtryFilmu };
-
+    noweFiltry.gener = "Dramat";
     switch (e.target.id) {
       case "genre":
         noweFiltry.gener = e.target.value;
@@ -31,6 +31,24 @@ export default function FormDoFiltrowania() {
 
     setfiltryFilmu(noweFiltry);
     console.log(noweFiltry);
+  }
+
+  function czyszczenieFiltrow(e) {
+    e.preventDefault();
+    let inputs = document.querySelectorAll("input");
+    let ul = document.querySelector("ul");
+    ul.remove();
+
+    inputs.forEach((input) => {
+      input.value = "";
+    });
+
+    setfiltryFilmu({
+      gener: "",
+      title: "",
+      odKiedy: "",
+      doKiedy: "",
+    });
   }
   return (
     <form onChange={flitrowanie}>
@@ -56,7 +74,9 @@ export default function FormDoFiltrowania() {
         do
         <input type="time" id="doKiedy" />
       </label>
-      <button type="reset">czysc</button>
+      <button type="reset" onClick={czyszczenieFiltrow}>
+        czysc
+      </button>
     </form>
   );
 }
