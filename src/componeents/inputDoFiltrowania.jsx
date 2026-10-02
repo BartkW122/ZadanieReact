@@ -1,56 +1,43 @@
-import { useRef } from "react";
+import { useState } from "react";
 import Movies from "./movies.js";
 
-export default function InputDoFiltrowania({ flitrowanie }) {
-  const wybraneTytul = useRef(document.createElement("ul"));
+export default function InputDoFiltrowania({ value, flitrowanie }) {
+  const [otwarte, setOtwarte] = useState(false);
 
-  function wartosciInputa(e) {
-    const label = document.querySelector("#filtrTytulow");
+  const podpowiedzi = Movies.filter((film) =>
+    film.title.toLowerCase().includes(value.toLowerCase()),
+  );
 
-    wybraneTytul.current.innerHTML = "";
-    label.children[0].value = e.target.innerText;
-
-    flitrowanie({
-      target: {
-        id: "title",
-        value: e.target.innerText,
-      },
-    });
-  }
-
-  function filtrowanie(e) {
-    const label = document.querySelector("#filtrTytulow");
-
-    wybraneTytul.current.innerHTML = "";
-
-    const szukanyTytul = e.target.value.toLowerCase();
-
-    Movies.forEach((item) => {
-      if (item.title.toLowerCase().includes(szukanyTytul)) {
-        const li = document.createElement("li");
-        const span = document.createElement("span");
-
-        span.innerText = item.title;
-        li.appendChild(span);
-        li.addEventListener("click", wartosciInputa);
-
-        wybraneTytul.current.appendChild(li);
-      }
-    });
-
-    if (!label.contains(wybraneTytul.current)) {
-      label.appendChild(wybraneTytul.current);
-    }
+  function wybierzTytul(tytul) {
+    flitrowanie({ target: { id: "title", value: tytul } });
+    setOtwarte(false);
   }
 
   return (
-    <>
+    <div className="pole-tytul">
       <input
         id="title"
-        onChange={filtrowanie}
         type="text"
+        autoComplete="off"
+        value={value}
+        onChange={(e) => {
+          flitrowanie(e);
+          setOtwarte(true);
+        }}
+        onFocus={() => setOtwarte(true)}
+        onBlur={() => setOtwarte(false)}
         placeholder="Podaj tytuł filmu który chcesz obejrzeć..."
       />
-    </>
+
+      {otwarte && value !== "" && podpowiedzi.length > 0 && (
+        <ul className="podpowiedzi">
+          {podpowiedzi.map((film) => (
+            <li key={film.id} onMouseDown={() => wybierzTytul(film.title)}>
+              {film.title}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
   );
 }

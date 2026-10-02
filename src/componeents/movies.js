@@ -4,6 +4,7 @@ import matrix from "../assets/matrix.png";
 import milczenieOwiec from "../assets/milczenieOwiec.png";
 import pulpFiction from "../assets/pulpFiction.png";
 import podziemnyKrag from "../assets/podziemnyKrag.png";
+import nietykalni from "../assets/nietykalni.png";
 
 const movies = [
   {
@@ -73,7 +74,7 @@ const movies = [
     duration: 6720,
     description:
       "Sparaliżowany milioner zatrudnia do opieki młodego chłopaka z przedmieścia, który właśnie wyszedł z więzienia.",
-    poster: matrix,
+    poster: nietykalni,
     showtimes: ["16:00", "19:30"],
   },
 ];

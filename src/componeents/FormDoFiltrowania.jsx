@@ -1,10 +1,6 @@
 import InputDoFiltrowania from "./InputDoFiltrowania";
 
-export default function FormDoFiltrowania({
-  filtryFilmu,
-  setFiltryFilmu,
-  setPokazListe,
-}) {
+export default function FormDoFiltrowania({ filtryFilmu, setFiltryFilmu }) {
   function flitrowanie(e) {
     const noweFiltry = {
       ...filtryFilmu,
@@ -27,34 +23,31 @@ export default function FormDoFiltrowania({
         noweFiltry.doKiedy = e.target.value;
         break;
 
+      case "sort":
+        noweFiltry.sort = e.target.value;
+        break;
+
       default:
         break;
     }
 
     setFiltryFilmu(noweFiltry);
-
-    setPokazListe(true);
   }
 
   function czyszczenieFiltrow(e) {
     e.preventDefault();
-    let inputs = document.querySelectorAll("input");
-    inputs.forEach((input) => {
-      input.value = "";
-    });
     setFiltryFilmu({
       gener: "",
       title: "",
       odKiedy: "",
       doKiedy: "",
+      sort: "",
     });
-
-    setPokazListe(false);
   }
 
   return (
-    <form onChange={flitrowanie}>
-      <select id="genre" value={filtryFilmu.gener}>
+    <form className="filtry" onSubmit={(e) => e.preventDefault()}>
+      <select id="genre" value={filtryFilmu.gener} onChange={flitrowanie}>
         <option value="">Wybierz gatunek</option>
         <option value="Dramat">Dramat</option>
         <option value="Komedia">Komedia</option>
@@ -64,9 +57,7 @@ export default function FormDoFiltrowania({
         <option value="Psychologiczny">Psychologiczny</option>
       </select>
 
-      <label>
-        <InputDoFiltrowania flitrowanie={flitrowanie} />
-      </label>
+      <InputDoFiltrowania value={filtryFilmu.title} flitrowanie={flitrowanie} />
 
       <label>
         od
@@ -88,7 +79,14 @@ export default function FormDoFiltrowania({
         />
       </label>
 
-      <button type="button" onClick={czyszczenieFiltrow}>
+      <select id="sort" value={filtryFilmu.sort} onChange={flitrowanie}>
+        <option value="">Sortuj</option>
+        <option value="tytul">Tytuł (A-Z)</option>
+        <option value="czas-rosnaco">Czas trwania (rosnąco)</option>
+        <option value="czas-malejaco">Czas trwania (malejąco)</option>
+      </select>
+
+      <button type="button" className="btn-drugi" onClick={czyszczenieFiltrow}>
         czyść
       </button>
     </form>
